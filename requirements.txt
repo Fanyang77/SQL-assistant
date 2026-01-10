@@ -1,0 +1,7 @@
+streamlit
+openai>=1.30.0
+python-dotenv
+pandas
+sqlalchemy
+sqlparse
+psycopg2-binary
