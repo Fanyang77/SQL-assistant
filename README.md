@@ -1,88 +1,98 @@
- SQL Assistant (Streamlit + LLM)
+AI SQL Assistant
 
 A web-based SQL Assistant built with Streamlit, OpenAI GPT, and SQLAlchemy.
-This app allows users to connect to any SQL database, query it using natural language, view the results, and even generate charts automatically via Vega-Lite.
+This app allows users to connect to any SQL database, ask questions in plain English, and instantly receive SQL queries, results, and visualizations.
+
+It is designed for analysts, data scientists, and non-technical users who want to explore databases without writing SQL manually.
+
+🚀 What it does
+
+Connect to any SQL database using a connection URL
+
+Or use a built-in demo SQLite database
+
+Convert natural language → SQL
+
+Automatically explain each generated query
+
+Display results in an interactive table
+
+Generate Vega-Lite charts (bar, line, scatter, etc.)
+
+Enforce read-only safety (only SELECT queries allowed)
+
+🧠 How it works
+
+The user enters a question in natural language
+
+The app sends the database schema and the question to an LLM
+
+The LLM generates safe, validated SQL
+
+The query is executed
+
+Results are shown as:
+
+A data table
+
+An auto-generated chart (when appropriate)
+
+This makes the system both powerful and auditable — users can see exactly what SQL was executed.
+
+📂 Project Structure
+AI_SQL_Assistant/
+├── app.py               # Main Streamlit application
+├── import_sqlite3.py    # Helper script to create demo SQLite DB
+├── demo.sqlite          # Built-in demo database
+├── README.md            # Documentation
+├── requirements.txt    # Python dependencies
 
 
-1.Features
+.env is used locally for the OpenAI API key but should not be committed to GitHub.
 
- Connect to any SQL database using a connection URL
- Or use the built-in demo SQLite database (auto-created on first launch)
- Ask questions in plain English — the LLM converts them into SQL
- Automatically explains each query in natural language
- Displays results in an interactive data table
- Generates Vega-Lite charts automatically (bar, line, scatter, etc.)
- Safely restricts queries to SELECT-only (no modifications or deletions)
+⚙️ Installation (Local)
+1) Install Python
 
+Make sure Python 3.9+ is installed:
+
+python --version
 
 
+Download if needed: https://www.python.org/downloads
 
-
-
-2.Project Structure
-SQL-assistant/
-│
-├── app.py                 # Streamlit web app
-├── .env                   # Contains your OpenAI API key
-├── mytest.db              # Sample SQLite database (3 tables, 10+ rows)
-├── demo.sqlite            # Auto-generated demo DB
-├── import_sqlite3.py      # Optional helper script to test SQLite manually
-├── Command.txt            # (optional) Notes or terminal commands
-└── README.md              # This documentation
-
-
-
-
-
-
-3. Installation
-Install Python
-
-a. Make sure you have Python 3.9+ installed.
-Check with:
-py --version
-If not installed, download it from python.org/downloads
-
- Remember to check the box “Add Python to PATH” during installation.
-
-b.  Create a Virtual Environment (optional but recommended)
+2) Create a virtual environment (recommended)
 python -m venv venv
-venv\Scripts\activate      # Windows
+venv\Scripts\activate     # Windows
 # or
-source venv/bin/activate   # Mac/Linux
+source venv/bin/activate  # Mac/Linux
 
-c.  Install Dependencies
-py -m pip install streamlit sqlalchemy pandas openai sqlparse python-dotenv duckdb altair
+3) Install dependencies
+pip install -r requirements.txt
 
-d.  Create .env File
+4) Set your OpenAI API key
 
-In the project folder, create a file named .env with your API key:
-OPENAI_API_KEY=sk-your-real-openai-api-key
-Get your key from https://platform.openai.com/api-keys
+Create a file called .env in the project root:
 
-f. Running the App
-From your terminal (inside the project folder):
-py -m streamlit run app.py
+OPENAI_API_KEY=sk-your-key-here
 
-It will open automatically in your browser at
+5) Run the app
+streamlit run app.py
+
+
+Open in your browser:
+
 http://localhost:8501
 
+🧪 Using the App
+Option 1 — Built-in Demo Database
 
-
-
-
-
-4. How to Use
-
-🧩 Option 1 — Demo Database
-
-Leave the “Database URL” box empty
+Leave the Database URL field empty
 
 Click Connect
 
-A demo SQLite database (demo.sqlite) will be created automatically
+The app loads demo.sqlite
 
-Try queries like:
+Try questions like:
 
 “Show all employees.”
 
@@ -90,59 +100,49 @@ Try queries like:
 
 “Show a bar chart of salary by department.”
 
-🧩 Option 2 — Connect to Your Own Database
+Option 2 — Connect to Your Own Database
 
-You can use any SQL database by entering its connection URL in the “Database URL” box:
+Enter a SQLAlchemy connection string:
 
-Database Type	Example URL
-SQLite	sqlite:///C:/Users/potat/OneDrive/Desktop/SQL-assistant/mytest.db
-PostgreSQL	postgresql://user:password@hostname:5432/dbname
-MySQL	mysql+pymysql://user:password@hostname:3306/dbname
+Database	Example
+SQLite	sqlite:///C:/path/to/db.sqlite
+PostgreSQL	postgresql://user:password@host:5432/dbname
+MySQL	mysql+pymysql://user:password@host:3306/dbname
 DuckDB	duckdb:///mydata.duckdb
 
+Then click Connect and start asking questions.
 
+📊 Example Demo Database
 
-5. Example Database Schema (mytest.db)
+The demo database contains:
 
 departments
-
 department_id	department_name
 1	Engineering
 2	Marketing
 3	Finance
-
 employees
-
 employee_id	name	city	department_id	salary	hire_date
 1	Alice	New York	1	95000	2020-03-10
-…	…	…	…	…	…
-
+...	...	...	...	...	...
 projects
-
 project_id	project_name	department_id	budget	start_date	end_date
 101	Product Redesign	1	250000	2022-01-01	2022-06-30
-…	…	…	…	…	…
+...	...	...	...	...	...
+🔮 Future Improvements
 
+Multiple simultaneous database connections
 
+More advanced visualization templates
 
+Export to CSV / Excel
 
+Query history & prompt memory
 
-6. Future Improvements
+Integration with LangChain
 
-Support for multiple simultaneous connections
+👤 Author
 
-More advanced data visualization templates
-
-Export results to CSV or Excel
-
-Integration with LangChain for prompt history
-
-
-
-
-Author
-
-Fan Yang (potat)
-Fordham University, Gabelli School of Business
-AI in Business | Data Science | Streamlit Developer
-
+Fan Yang
+Fordham University — Gabelli School of Business
+Focus: AI in Business · Data Science · LLM Applications
